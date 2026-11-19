@@ -62,7 +62,7 @@ app.post("/alunos", (req, res) => {
 })
 
 // PUT - Atualizar aluno
-app.put("/aluno/id:id", (req, res) => {
+app.put("/aluno/:id", (req, res) => {
     const id = Number(req.params.id);
 
     const indice = alunos.findIndex(a => a.id === id);
@@ -88,7 +88,7 @@ app.put("/aluno/id:id", (req, res) => {
         turma
     }
 
-    res.sendStatus(200).json(alunos[indice]);
+    res.status(200).json(alunos[indice]);
 });
 
 // DELETE - Excluir aluno - desafio montar estrutura
@@ -106,3 +106,8 @@ app.delete("/aluno/:id", (req, res) => {
     alunos = alunos.filter(a => a.id !== id);
     res.sendStatus(204).send();
 });
+
+// Iniciar servidor
+app.listen(PORT, () => {
+    console.log(`API executando em http://localhost:${PORT}`)
+})
