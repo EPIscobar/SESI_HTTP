@@ -51,7 +51,7 @@ app.post("/alunos", (req, res) => {
 
     const novoAluno = {
         // operador ternário
-        id: alunos.lenght ? Math.max(...alunos.map(a => a.id)) + 1 : 1,
+        id: alunos.length ? Math.max(...alunos.map(a => a.id)) + 1 : 1,
         nome,
         email,
         turma
@@ -111,3 +111,25 @@ app.delete("/aluno/:id", (req, res) => {
 app.listen(PORT, () => {
     console.log(`API executando em http://localhost:${PORT}`)
 })
+
+//PACH - 
+app.patch("/aluno:id" , (req, res) => {
+    const id = Number(req.params.id);
+
+    const aluno = aluno.find(a => a.id === id);
+
+    if(!aluno) {
+        return res.status(404).json({
+            mensagem: "Aluno não encontrado"
+        });
+    
+    }
+
+    const {nome, email, turma} = req.body;
+
+    aluno.nome = nome || aluno.nome;
+    aluno.email = email || aluno.email;
+    aluno.turma = turma || aluno.turma;
+
+    res.status(200).json(aluno);
+});
